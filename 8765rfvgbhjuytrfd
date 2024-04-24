@@ -1,0 +1,186 @@
+--Abyss Anti ChatLogger Gui
+local Player = game.Players.LocalPlayer;
+local PlayerGui = Player.PlayerGui;
+local CoreGui = game:GetService("CoreGui")
+local mouse = game.Players.LocalPlayer:GetMouse()
+local UserInputService = game:GetService("UserInputService")
+local ContextActionService = game:GetService("ContextActionService")
+
+local Action_FocusTheTextBox = "FocusTheTextBox"
+
+if PlayerGui:FindFirstChild("ChatBypassGui") then
+	PlayerGui:FindFirstChild("ChatBypassGui"):Destroy()
+end
+
+if CoreGui:FindFirstChild("ChatBypassGui") then
+	CoreGui:FindFirstChild("ChatBypassGui"):Destroy()
+end
+
+-- Instances
+
+local ChatBypassGui = Instance.new("ScreenGui")
+local HeadingFrame = Instance.new("Frame")
+local HeadingLabel = Instance.new("TextLabel")
+local MinimizeButton = Instance.new("TextButton")
+local MinimizeButtonUICorner = Instance.new("UICorner")
+local CloseButton = Instance.new("TextButton")
+local MinimizeButtonUICorner_2 = Instance.new("UICorner")
+local MainFrame = Instance.new("Frame")
+local MainFrameUICorner = Instance.new("UICorner")
+local ChatBox_Input = Instance.new("TextBox")
+local HeadingFrameUICorner = Instance.new("UICorner")
+local MainFrameUIGradient = Instance.new("UIGradient")
+
+-- Properties
+
+ChatBypassGui.Name = "AbyssAntiChatLoggerGui"
+ChatBypassGui.Parent = CoreGui
+ChatBypassGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+HeadingFrame.Name = "HeadingFrame"
+HeadingFrame.Parent = ChatBypassGui
+HeadingFrame.BackgroundColor3 = Color3.new(20/255, 20/255, 20/255) -- Dark background (RGB 20, 20, 20)
+HeadingFrame.BorderColor3 = Color3.new(20/255, 20/255, 20/255)
+HeadingFrame.BorderSizePixel = 0
+HeadingFrame.Position = UDim2.new(0.429817617, 0, 0.33093524, 0)
+HeadingFrame.Size = UDim2.new(0.237906426, 0, 0.0359712243, 0)
+
+HeadingLabel.Name = "HeadingLabel"
+HeadingLabel.Parent = HeadingFrame
+HeadingLabel.BackgroundColor3 = Color3.new(20/255, 20/255, 20/255) -- Dark background (RGB 20, 20, 20)
+HeadingLabel.BackgroundTransparency = 1
+HeadingLabel.BorderColor3 = Color3.new(20/255, 20/255, 20/255)
+HeadingLabel.BorderSizePixel = 0
+HeadingLabel.Size = UDim2.new(0.860000014, 0, 1, 0)
+HeadingLabel.Font = Enum.Font.FredokaOne
+HeadingLabel.Text = "Left Click Me To Drag"
+HeadingLabel.TextColor3 = Color3.new(1, 1, 1) -- White text
+HeadingLabel.TextScaled = true
+HeadingLabel.TextSize = 14
+HeadingLabel.TextWrapped = true
+
+MinimizeButton.Name = "MinimizeButton"
+MinimizeButton.Parent = HeadingFrame
+MinimizeButton.BackgroundColor3 = Color3.new(20/255, 20/255, 20/255) -- Dark background (RGB 20, 20, 20)
+MinimizeButton.BorderColor3 = Color3.new(20/255, 20/255, 20/255)
+MinimizeButton.BorderSizePixel = 0
+MinimizeButton.Position = UDim2.new(0.861890078, 0, -0.00134277344, 0)
+MinimizeButton.Size = UDim2.new(0.0666666701, 0, 1, 0)
+MinimizeButton.Font = Enum.Font.FredokaOne
+MinimizeButton.Text = "↑↓"
+MinimizeButton.TextColor3 = Color3.new(1, 1, 1) -- White text
+MinimizeButton.TextScaled = true
+MinimizeButton.TextSize = 14
+MinimizeButton.TextWrapped = true
+
+MinimizeButtonUICorner.Name = "MinimizeButtonUICorner"
+MinimizeButtonUICorner.Parent = MinimizeButton
+
+CloseButton.Name = "CloseButton"
+CloseButton.Parent = HeadingFrame
+CloseButton.BackgroundColor3 = Color3.new(20/255, 20/255, 20/255) -- Dark background (RGB 20, 20, 20)
+CloseButton.BorderColor3 = Color3.new(20/255, 20/255, 20/255)
+CloseButton.BorderSizePixel = 0
+CloseButton.Position = UDim2.new(0.930277526, 0, -0.00134297693, 0)
+CloseButton.Size = UDim2.new(0.0666666701, 0, 1, 0)
+CloseButton.Font = Enum.Font.FredokaOne
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.new(1, 1, 1) -- White text
+CloseButton.TextScaled = true
+CloseButton.TextSize = 14
+CloseButton.TextWrapped = true
+
+MinimizeButtonUICorner_2.Name = "MinimizeButtonUICorner"
+MinimizeButtonUICorner_2.Parent = CloseButton
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = HeadingFrame
+MainFrame.BackgroundColor3 = Color3.new(20/255, 20/255, 20/255) -- Dark background (RGB 20, 20, 20)
+MainFrame.BorderColor3 = Color3.new(20/255, 20/255, 20/255)
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0, 0, 1, 0)
+MainFrame.Size = UDim2.new(1, 0, 5, 0)
+
+MainFrameUICorner.Name = "MainFrameUICorner"
+MainFrameUICorner.Parent = MainFrame
+
+ChatBox_Input.Parent = MainFrame
+ChatBox_Input.BackgroundColor3 = Color3.new(20/255, 20/255, 20/255) -- Dark background (RGB 20, 20, 20)
+ChatBox_Input.BackgroundTransparency = 1
+ChatBox_Input.BorderColor3 = Color3.new(20/255, 20/255, 20/255)
+ChatBox_Input.BorderSizePixel = 0
+ChatBox_Input.Size = UDim2.new(1, 0, 1, 0)
+ChatBox_Input.Font = Enum.Font.FredokaOne
+ChatBox_Input.PlaceholderText = "Chat bypass [You won't get banned for your messages] Press Enter to send a Message! Prefix: ' (Made By Abyss)"
+ChatBox_Input.Text = ""
+ChatBox_Input.TextColor3 = Color3.new(1, 1, 1) -- White text
+ChatBox_Input.TextSize = 15
+ChatBox_Input.TextWrapped = true
+ChatBox_Input.TextXAlignment = Enum.TextXAlignment.Left
+ChatBox_Input.TextYAlignment = Enum.TextYAlignment.Top
+
+HeadingFrameUICorner.Name = "HeadingFrameUICorner"
+HeadingFrameUICorner.Parent = HeadingFrame
+
+MainFrameUIGradient.Name = "MainFrameUIGradient"
+MainFrameUIGradient.Parent = MainFrame
+MainFrameUIGradient.Rotation = -90
+MainFrameUIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.new(20/255, 20/255, 20/255)), ColorSequenceKeypoint.new(1, Color3.new(49/255, 0, 134/255))} -- Gradient with RGB colors
+
+local function AbyssAntiChatLoggerGui()
+	local args = {[1] = ChatBox_Input.Text,[2] = "All"}
+	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+	ChatBox_Input.Text = ""
+end
+
+local function handleAction(actionName, inputState, _inputObject)
+	if actionName == Action_FocusTheTextBox and inputState == Enum.UserInputState.End then
+		ChatBox_Input:CaptureFocus()
+	end
+end
+
+UserInputService.InputBegan:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.Return and ChatBox_Input.Text ~= "" then
+		AbyssAntiChatLoggerGui()
+	end	
+end)
+
+local dragging = false
+
+local function updatePosition()
+	HeadingFrame.Position = UDim2.new(0, mouse.X + 10, 0, mouse.Y)
+end
+
+HeadingFrame.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 and dragging == false then
+		dragging = true
+		HeadingLabel.Text = "Right Click Me To Stop"
+	end
+end)
+
+mouse.Button2Down:Connect(function()
+	if dragging == true then
+		dragging = false
+		HeadingLabel.Text = "Left Click Me To Drag"
+	end
+end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+	if dragging then
+		updatePosition()
+	end
+end)
+
+MinimizeButton.MouseButton1Click:Connect(function()
+
+	MainFrame.Visible = not MainFrame.Visible
+
+end)
+
+CloseButton.MouseButton1Click:Connect(function()
+
+	ChatBypassGui:Destroy()
+
+end)
+
+ContextActionService:BindAction(Action_FocusTheTextBox, handleAction, false, Enum.KeyCode.Quote)
